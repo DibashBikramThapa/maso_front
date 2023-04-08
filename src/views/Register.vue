@@ -5,6 +5,9 @@
   export default {
     data() {
       return {
+        show_register_msg: false,
+        registered_msg: '',
+        register_tag: '',
         formClass: 'form_class',
         user:{
           name: '',
@@ -21,26 +24,38 @@
         },
         emailhandler(e) {
           this.user.email = e.target.value
-      },
-      postData(e){
-        e.preventDefault()
-        debugger
-        axios.post('http://127.0.0.1:8000/create',this.user,{
-          headers : {
-              'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-          }
-      }).then(result =>
-        console.log(result))
-        
-      }
+        },
+        postData(e){
+          e.preventDefault()
+          axios.post('http://127.0.0.1:8000/create',this.user,{
+            headers : {
+                'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+        }).then(result =>{
+            console.log(result)
+            this.show_register_msg = true
+            if(result.data){
+              this.register_tag = 'register-success'
+              this.registered_msg = 'User created '+result.data
+            }else{
+              this.register_tag = 'register-error'
+              this.registered_msg = 'Something went wrong '+result.status
+
+            }
+          })
+        }
       }
   }
 </script>
 
 <template>
-  <!-- <h2>{{ count }}</h2>
-  <h1 :class="titleClass">{{ message }}</h1>
-  <button @click="increment">Increase count</button> -->
+
+  <template v-if="show_register_msg">
+    <div :class="register_tag">
+      <h2>{{ registered_msg }}</h2>
+    </div>
+  </template>
+
   <form :class="formClass" method="POST" @submit="postData">
     <label>Name: </label>
     <input v-model="user.name" placeholder="Name">
