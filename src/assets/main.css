@@ -21,6 +21,8 @@ body{
 
 .wrap-rview{
   padding: 5rem 0 0;
+  display: grid;
+  justify-content: center;
 }
 
 a{
@@ -33,4 +35,8 @@ a{
 }
 .register-error{
   color: red;
+}
+
+input{
+  text-align: center;
 }
