@@ -10,12 +10,10 @@
     <form class="form_class" method="POST" @submit="create_blog">
 
         <label>Category:</label>
-        <div @click="get_categories">
-            <select v-model="post.categories_id" required="required">
-                <option disabled value="">Please Select</option>
-                <option v-for="option in options" :value="option.id">{{option.title}}</option>
-            </select>
-        </div>
+        <select v-model="post.categories_id" required="required">
+            <option disabled value="">Please Select</option>
+            <option v-for="option in options" :value="option.id">{{option.title}}</option>
+        </select>
         <label>Title:</label>
         <input v-model="post.title" placeholder="Title" required="required">
         <label>Description:</label>
@@ -39,15 +37,10 @@
                     body: '',
                     categories_id: ''
                 },
-                options: [
-                    'A',
-                    'B',
-                    'C'
-                ],
+                options: '',
                 store,
                 msg: '',
                 created: false,
-                options1:''
             }
         },
         methods: {
@@ -62,16 +55,16 @@
                             this.msg = result.data
                         })
             },
-            get_categories(){
-                axios.get('http://127.0.0.1:8000/api/blogs/category/show', {
-                    headers : {
-                        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization' : `Bearer ${this.store.user_token}`
-                        }}).then(result => {
-                            this.options = result.data
-                        })
-            }
-      }
+        },
+        mounted(){
+            axios.get('http://127.0.0.1:8000/api/blogs/category/show', {
+                headers : {
+                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'Authorization' : `Bearer ${this.store.user_token}`
+                    }}).then(result => {
+                        this.options = result.data
+                    })
+        }
 
 }
 
