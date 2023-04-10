@@ -1,8 +1,15 @@
+
 <template>
 
-    <form>
+    <div v-if="created">
+        <div class="register-success">
+            <h2>{{ msg }} category created</h2>
+        </div>
+    </div>
+
+    <form class="form_class" method="POST" @submit="create_category">
         <label>Title:</label>
-        <input v-model="title" placeholder="Title">
+        <input v-model="category.title" placeholder="Title">
         <button type="submit">Create</button>
     </form>
 
@@ -11,24 +18,31 @@
 <script>
 
     import axios from 'axios';
+    import {store} from '../store/store.js'
 
-    export default {
+        export default{
         data(){
-            title: ''
+            return{
+                category:{
+                    title: ''
+                },
+                store,
+                msg: '',
+                created: false
+            }
         },
-      methods: {
-        postData(e){
-            e.preventDefault()
-            axios.post('http://127.0.0.1:8000/api/blogs/create',this.title,{
-                headers : {
-                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-                    'Authorization' : `Bearer ${this.user_token}`
-
-                }
-            }).then(result =>{
-
-            })
-        }
+        methods: {
+            create_category(e){
+                e.preventDefault()
+                axios.post('http://127.0.0.1:8000/api/blogs/category/create', this.category, {
+                    headers : {
+                        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization' : `Bearer ${this.store.user_token}`
+                        }}).then(result => {
+                            this.created = true,
+                            this.msg = result.data.title
+                        })
+            }
       }
 
 }

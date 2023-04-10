@@ -3,8 +3,6 @@
     <div v-if="current_user.name">
         Welcome: {{ current_user.name }}
         <button @click="logout">Logout</button>
-        <button>Create Categories</button>
-        <button>Create Blog</button>
     </div>
     <div v-else="">
         <form class="form_class" method="POST" @submit="postData">

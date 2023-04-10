@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import {store} from './store/store.js'
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
@@ -13,6 +14,10 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/register">Register</RouterLink>
+        <template v-if="store.user_token">
+          <RouterLink to="/createCategory">Create Category</RouterLink>
+          <RouterLink to="/createBlog">Create Blog</RouterLink>
+        </template>
       </nav>
     </div>
   </div>
