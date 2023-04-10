@@ -9,7 +9,7 @@
 
     <form class="form_class" method="POST" @submit="create_category">
         <label>Title:</label>
-        <input v-model="category.title" placeholder="Title">
+        <input v-model="category.title" placeholder="Title" required="required">
         <button type="submit">Create</button>
     </form>
 
