@@ -4,12 +4,11 @@
         My blogs:
 
         <div v-for="each in bloglist">
-            <!-- <h3>{{ each.category_id.name }}</h3> -->
-            <h3>{{ each.category_id }}</h3>
+            <h3>{{ each.categories.title }}</h3>
             <h4>{{ each.title }}</h4>
             <p>{{ each.body }}
                 <br/>
-                <span style="font-style: italic;">Created by {{ each.author_id }} at {{ each.created_at }}</span></p>
+                <span style="font-style: italic;">Created by {{ each.authors.name }} at {{ each.created_at }}</span></p>
         </div>
 
     </div>
