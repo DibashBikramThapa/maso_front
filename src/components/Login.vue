@@ -26,11 +26,7 @@ import {store} from '../store/store.js'
     export default{
         data(){
             return{
-                current_user: {
-                    'id': '',
-                    'name': '',
-                    'email': '',
-                },
+                current_user: store.getcurrent_user(),
                 store,
                 user:{
                     username:'',
@@ -62,11 +58,13 @@ import {store} from '../store/store.js'
                         'Authorization' : `Bearer ${this.store.user_token}`
                 }}).then(result => {
                     this.store.setuser_token(null)
-                    this.current_user={
+                    this.store.setcurrent_user({
                     'id': '',
                     'name': '',
                     'email': '',
-                }
+                })
+                this.current_user = store.getcurrent_user()
+
                 })
             },
             getuserdata(){
@@ -93,7 +91,8 @@ import {store} from '../store/store.js'
                         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
                         'Authorization' : `Bearer ${this.store.user_token}`
                         }}).then(user_data => {
-                            this.current_user = user_data.data
+                            this.store.setcurrent_user(user_data.data)
+                            this.current_user = store.getcurrent_user()
                         })
             },
         }

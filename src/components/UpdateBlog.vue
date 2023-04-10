@@ -52,7 +52,6 @@
                         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
                         'Authorization' : `Bearer ${this.store.user_token}`
                         }}).then(result => {
-                            debugger
                             this.created = true,
                             this.msg = result.data
                         })
