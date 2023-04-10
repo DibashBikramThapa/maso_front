@@ -17,6 +17,7 @@ import {store} from './store/store.js'
         <template v-if="store.user_token">
           <RouterLink to="/createCategory">Create Category</RouterLink>
           <RouterLink to="/createBlog">Create Blog</RouterLink>
+          <RouterLink to="/ListBlog">My blog</RouterLink>
         </template>
       </nav>
     </div>

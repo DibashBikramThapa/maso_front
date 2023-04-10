@@ -4,6 +4,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import CreateBlog from '../views/CreateBlog.vue'
 import CreateCategory from '../views/CreateCategory.vue'
+import ListBlog from '../views/ListBlog.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/createCategory',
       name: 'createCategory',
       component: CreateCategory
+    },
+    {
+      path: '/ListBlog',
+      name: 'ListBlog',
+      component: ListBlog
     },
   ]
 })
