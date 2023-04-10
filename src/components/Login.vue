@@ -3,6 +3,8 @@
     <div v-if="current_user.name">
         Welcome: {{ current_user.name }}
         <button @click="logout">Logout</button>
+        <button>Create Categories</button>
+        <button>Create Blog</button>
     </div>
     <div v-else="">
         <form class="form_class" method="POST" @submit="postData">
@@ -22,6 +24,7 @@
 
 <script>
 import axios from 'axios';
+import {store} from '../store/store.js'
     export default{
         data(){
             return{
@@ -30,7 +33,7 @@ import axios from 'axios';
                     'name': '',
                     'email': '',
                 },
-                user_token: '',
+                store,
                 user:{
                     username:'',
                     password:''
@@ -47,19 +50,20 @@ import axios from 'axios';
                 }
             }).then(result => {
                 if( result.data != "False"){
-                    this.user_token = result.data.data
+                    this.store.setuser_token(result.data.data)
                 }else{
-                    this.user_token = null
+                    this.store.setuser_token(null)
                 }
+                console.log(result)
             })
             },
             logout(){
                 axios.get('http://127.0.0.1:8000/api/logout',{
                     headers : {
                         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization' : `Bearer ${this.user_token}`
+                        'Authorization' : `Bearer ${this.store.user_token}`
                 }}).then(result => {
-                    this.user_token = null
+                    this.store.setuser_token(null)
                     this.current_user={
                     'id': '',
                     'name': '',
@@ -68,27 +72,32 @@ import axios from 'axios';
                 })
             },
             getuserdata(){
-                this.user_token &&
+                this.store.user_token &&
                 axios.get('http://127.0.0.1:8000/api/users',{
                     headers : {
                         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization' : `Bearer ${this.user_token}`
+                        'Authorization' : `Bearer ${this.store.user_token}`
                         }}).then(user_data => {
                             this.all_users = user_data.data
                         })
             }
         },
+        computed: {
+                    user_token(){
+                        return this.store.user_token
+                    }
+                },
         watch: {
-            user_token: function(){
-                this.user_token &&
+            user_token(){
+                this.store.user_token &&
                 axios.get('http://127.0.0.1:8000/api/current_user',{
                     headers : {
                         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-                        'Authorization' : `Bearer ${this.user_token}`
+                        'Authorization' : `Bearer ${this.store.user_token}`
                         }}).then(user_data => {
                             this.current_user = user_data.data
                         })
-            }
+            },
         }
     }
 </script>
